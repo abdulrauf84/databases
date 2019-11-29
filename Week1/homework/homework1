@@ -1,0 +1,29 @@
+CREATE DATABASE WORLD;
+
+CREATE TABLE country (
+  code VARCHAR(255) PRIMARY KEY NOT NULL, 
+  Name VARCHAR(255)
+  Continent VARCHAR(255), 
+  Population INT, 
+  
+);
+
+CREATE TABLE city (
+  ID INT AUTO_INCREMENT NOT NULL PRIMARY KEY, 
+  Name VARCHAR(255),
+  CountryCode VARCHAR(255), 
+  Population INT, 
+);
+INSERT INTO country(code, Name, Continent, Population) 
+values ('SWE', 'SWEDEN', 'Europe', 9000000),
+('SWE', 'SWEDEN', 'Europe', 9000000),
+('DNK', 'DENMARK', 'Europe', 8000000),
+('SPA', 'SPAIN', 'Europe', 7000000),
+('FRA', 'FRANCE', 'Europe', 1200000);
+
+INSERT INTO city(ID, Name, CountryCode, Population) 
+values (1, 'Malmo', 'SWE', 300000),
+(2, 'Copenhagen', 'DNK', 600000),
+(3, 'DENMARK', 'Europe', 8000000),
+(4, 'Madrid', 'SPA', 800000),
+(5, 'Paris', 'FRA', 900000);
