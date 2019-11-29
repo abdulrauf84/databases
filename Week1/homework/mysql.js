@@ -6,21 +6,15 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '1234567890',
-});
-db.query('CREATE DATABASE IF NOT EXISTS new_world;', (err, result) => {
-  if (err) throw err;
-  console.log('Database created');
-});
-db.query('USE new_world;', (err, result) => {
-  if (err) throw err;
-  console.log('Database Connected');
+  database: 'new_world',
 });
 
 app.get('/q1', (req, res) => {
   let sql = 'SELECT country.Name FROM country WHERE Population > 800000 ORDER BY country.Name ASC;';
-  db.query(sql, (err, result) => {
+  db.query(sql, (err, result, field) => {
     if (err) throw err;
     res.json(result);
+    console.log(field);
   });
 });
 app.get('/q2', (req, res) => {
@@ -53,7 +47,8 @@ app.get('/q5', (req, res) => {
 });
 
 app.get('/q6', (req, res) => {
-  let sql = 'SELECT Name FROM city WHERE countryCode="NLD";';
+  let sql =
+    'SELECT city.Name FROM city join country on city.CountryCode = country.Code WHERE country.Name = "Netherlands";';
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.json(result);
