@@ -11,8 +11,8 @@ const db = mysql.createConnection({
 
 //1.What is the capital of country X ? (Accept X from user)
 app.get('/capital/:country', (req, res) => {
-  let sql = 'SELECT Capital FROM country WHERE Name=?;';
-  db.query(sql, req.params.country, (err, result) => {
+  let sql = 'SELECT Capital FROM country WHERE Name=?';
+  db.query(sql, req.param.country, (err, result) => {
     if (err) throw err;
     res.json(result);
     console.log(field);
@@ -20,23 +20,26 @@ app.get('/capital/:country', (req, res) => {
 });
 //2.List all the languages spoken in the region Y (Accept Y from user)
 app.get('/language/:region', (req, res) => {
-  let sql = 'SELECT Language FROM country WHERE region=?';
-  db.query(sql, req.params.continent, (err, result) => {
+  let sql =
+    'SELECT countrylanguage.Language From countrylanguage JOIN  country ON country.Code=countrylanguage.CountryCode where country.Region=?';
+  db.query(sql, req.params.region, (err, result) => {
     if (err) throw err;
     res.json(result);
   });
 });
 //3.Find the number of cities in which language Z is spoken (Accept Z from user)
-app.get('/cities/:language', (req, res) => {
-  let sql = 'SELECT count(Name) FROM city WHERE Language=?';
+app.get('/city/:language', (req, res) => {
+  let sql =
+    'SELECT COUNT(DISTINCT city.Name) From city JOIN  countrylanguage ON city.CountryCode=countrylanguage.CountryCode WHERE countrylanguage.Language=?';
   db.query(sql, req.params.language, (err, result) => {
     if (err) throw err;
     res.json(result);
   });
 });
 //4.List all the continents with the number of languages spoken in each continent
-app.get('/lang-cont', (req, res) => {
-  let sql = 'SELECT count(DISTINCT Language), Continent FROM Country GROUP BY Continent';
+app.get('/continent', (req, res) => {
+  let sql =
+    'SELECT COUNT(DISTINCT countrylanguage.Language),country.Continent From countrylanguage JOIN  country ON countrylanguage.CountryCode=country.Code GROUP BY country.Continent;';
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.json(result);
