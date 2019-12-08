@@ -39,7 +39,7 @@ app.get('/city/:language', (req, res) => {
 //4.List all the continents with the number of languages spoken in each continent
 app.get('/continent', (req, res) => {
   let sql =
-    'SELECT COUNT(DISTINCT countrylanguage.Language),country.Continent From countrylanguage JOIN  country ON countrylanguage.CountryCode=country.Code GROUP BY country.Continent;';
+    'SELECT COUNT(DISTINCT countrylanguage.Language),country.Continent From countrylanguage JOIN  country ON countrylanguage.CountryCode=country.Code GROUP BY country.Continent';
   db.query(sql, (err, result) => {
     if (err) throw err;
     res.json(result);
