@@ -21,7 +21,7 @@ app.get('/capital/:country', (req, res) => {
 //2.List all the languages spoken in the region Y (Accept Y from user)
 app.get('/language/:region', (req, res) => {
   let sql =
-    'SELECT DISTINCT(cl.Language) From countrylanguage cl JOIN  country ON country.Code=countrylanguage.CountryCode where country.Region=?';
+    'SELECT DISTINCT(cl.Language) From countrylanguage cl JOIN  country ON country.Code=cl.CountryCode where country.Region=?';
   db.query(sql, req.params.region, (err, result) => {
     if (err) throw err;
     res.json(result);
