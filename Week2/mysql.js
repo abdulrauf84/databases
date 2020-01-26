@@ -10,12 +10,12 @@ const db = mysql.createConnection({
 });
 
 //1.What is the capital of country X ? (Accept X from user)
-app.get('/capital/:country', (req, res) => {
+app.get('/search', (req, res) => {
   let sql = 'SELECT Capital FROM country WHERE Name=?';
-  db.query(sql, req.param.country, (err, result) => {
+  let capital = req.query.capital;
+  db.query(sql, capital, (err, result) => {
     if (err) throw err;
     res.json(result);
-    console.log(field);
   });
 });
 //2.List all the languages spoken in the region Y (Accept Y from user)
